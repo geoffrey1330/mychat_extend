@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mychat-deployment
+  labels:
+    app: mychat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mychat
+  template:
+    metadata:
+      labels:
+        app: mychat
+    spec:
+      containers:
+      - name: mychat
+        image: geoffrey13/vidchat:1.0
+        ports:
+        - containerPort: 8000
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mychat-service
+spec:
+  type: NodePort
+  selector:
+    app: mychat
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+      nodePort: 30112

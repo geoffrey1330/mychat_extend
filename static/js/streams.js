@@ -1,5 +1,5 @@
 
-const APP_ID = 'YOUR APP ID'
+const APP_ID = '12f4cd1e3f684f008f0e71f6fbb9e624'
 const TOKEN = sessionStorage.getItem('token')
 const CHANNEL = sessionStorage.getItem('room')
 let UID = sessionStorage.getItem('UID')
@@ -19,13 +19,15 @@ let joinAndDisplayLocalStream = async () => {
 
     try{
         UID = await client.join(APP_ID, CHANNEL, TOKEN, UID)
+        
     }catch(error){
+        //console.log("GOAT")
         console.error(error)
         window.open('/', '_self')
     }
     
     localTracks = await AgoraRTC.createMicrophoneAndCameraTracks()
-
+    console.log("GOAT")
     let member = await createMember()
 
     let player = `<div  class="video-container" id="user-container-${UID}">

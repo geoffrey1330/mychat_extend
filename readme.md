@@ -43,3 +43,39 @@ python manage.py runserver
 ```
 
 
+## Using Docker and Kubernetes 
+For this demo we will be running kubernetes on our local machine, instead of a cloud service. To get the docker and kubernetes running on our system we need to install three set of programs
+- [Docker](https://docs.docker.com/desktop/) 
+- [Minikube](https://minikube.sigs.k8s.io/docs/start/)
+- [Kubectl](https://kubernetes.io/docs/tasks/tools/)
+
+### How start application with docker and finally deploy to kubernetes
+
+#### 1- Build Docker image locally or pull from docker hub
+To build docker image locally
+```
+docker build -t vidchat:1.0 .  
+```
+OR
+To pull from docker hub
+
+```
+docker pull geoffrey13/vidchat:1.0
+```
+
+#### 2- deploy To Kubernetes
+For our own case it will be minikube
+```
+cd deploy
+kubectl apply -f mychat.yaml  
+```
+#### 3- Start our application
+
+```
+minikube tunnel  
+```
+Open another terminal
+
+```
+minikube service mychat-service
+```
