@@ -54,7 +54,7 @@ For this demo we will be running kubernetes on our local machine, instead of a c
 #### 1- Build Docker image locally or pull from docker hub
 To build docker image locally
 ```
-docker build -t vidchat:1.0 .  
+docker build -t geoffrey13/vidchat:1.0 .  
 ```
 OR
 To pull from docker hub
