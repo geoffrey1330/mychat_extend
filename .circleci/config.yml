@@ -5,18 +5,36 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-    create_infrastructure: 
-      docker:
-        - image: amazon/aws-cli
-      steps:
-        - checkout
-        - run:
-            name: Create Cloudformation Stack
-            command: |
-              aws cloudformation deploy \
-                --template-file template.yml \
-                --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
-                --region us-east-1
+    # create_infrastructure: 
+    #   docker:
+    #     - image: amazon/aws-cli
+    #   steps:
+    #     - checkout
+    #     - run:
+    #         name: Create Cloudformation Stack
+    #         command: |
+    #           aws cloudformation deploy \
+    #             --template-file template.yml \
+    #             --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
+    #             --region us-east-1
+
+    configure_infrastructure: 
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["fe:3d:c0:0b:c8:97:84:b7:e1:13:43:e6:cf:10:3e:a4"] # You can get this ID in the section where you registered the SSH Key
+      - run:
+          name: Install dependencies
+          command: |
+            # install the dependencies needed for your playbook
+            apk add --update ansible 
+      - run:
+          name: Configure server
+          command: |
+            ansible-playbook -i inventory.txt main.yml
+
 
 
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
